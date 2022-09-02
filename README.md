@@ -799,6 +799,6 @@ forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.9931472), main="Meta-anal
 dev.off()
 
 ## Done....
-
+```
 ![myImage](https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif)
 
