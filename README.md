@@ -771,7 +771,7 @@ forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.6931472), main="Meta-anal
 dev.off()
 
 pdf(file = "GD_only_forest_FINAL_arrowv2.pdf", width = 8, height = 6)
-forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.9931472), main="Meta-analysis of PD GRS", at=log(c(0.5,0.75, 1, 2, 12)), atransf=exp, xlab=paste("Odds Ratio (95%CI)",sep=""), slab=labs, mlab="Random Effects", col = "red", border = "red", cex=.9)
+forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.9931472), main="Meta-analysis of PD GRS", at=log(c(0.5,0.75, 1, 2, 14)), atransf=exp, xlab=paste("Odds Ratio (95%CI)",sep=""), slab=labs, mlab="Random Effects", col = "red", border = "red", cex=.9)
 dev.off()
 
 ##### PD
