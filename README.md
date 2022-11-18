@@ -238,7 +238,7 @@ plink --bfile AJEUR_Yes_analysis_GD1_plus_coriell --extract pruned_data.prune.in
 plink --bfile GD_pre_PC_prune --pca --out AJEUR_Yes_analysis_GD1_plus_coriell_PCA
 
 ### PC files:
-module load R
+module load R/3.6.1
 R
 require("plyr")
 samples <- read.table("../all_pheno.txt",header=T)
@@ -482,7 +482,7 @@ sed -i 's/PD_age_of_onset_/PD_age_of_onset/g' EUR_Yes_analysis_GD1_PCA_COV.txt
 sed -i 's/PD_Status_/PD_Status/g' AJEUR_Yes_analysis_GD1_PCA_COV.txt
 sed -i 's/PD_age_of_onset_/PD_age_of_onset/g' AJEUR_Yes_analysis_GD1_PCA_COV.txt
 
-module load R
+module load R/3.6.1
 R
 library(ggplot2)
 # data load in
@@ -599,6 +599,7 @@ PD_only <- subset(MM_AJ, COHORT == "CORIELL")
 table(PD_only$PD_PHENO)
 # 335 cases and 109 controls
 
+# NO AGE
 thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5"))
 model1 <- glm(thisFormula1, data = GD_only_AJ, ,family=binomial)
 print(summary(model1))
@@ -613,6 +614,23 @@ PC3           0.8794     3.6583   0.240   0.8100
 PC4          -7.6105     3.4258  -2.222   0.0263 *
 PC5          -3.7701     3.2834  -1.148   0.2509  
 
+# WITH AGE
+thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5 + AGE"))
+model1 <- glm(thisFormula1, data = GD_only_AJ, ,family=binomial)
+print(summary(model1))
+
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept) -0.61228    1.41405  -0.433   0.6650  
+SCOREZ       0.44583    0.23737   1.878   0.0603 .
+sex         -0.26602    0.54827  -0.485   0.6275  
+PC1         -4.84006    2.87100  -1.686   0.0918 .
+PC2          2.08739    4.05602   0.515   0.6068  
+PC3          0.47716    3.68586   0.129   0.8970  
+PC4         -7.34858    3.46109  -2.123   0.0337 *
+PC5         -3.61220    3.35557  -1.076   0.2817  
+AGE         -0.02548    0.01981  -1.286   0.1983  
+
+# NO AGE
 thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5"))
 model1 <- glm(thisFormula1, data = PD_only, ,family=binomial)
 print(summary(model1))
@@ -626,6 +644,23 @@ PC2         -0.08652    4.10115  -0.021    0.983
 PC3         -5.30393    4.65617  -1.139    0.255    
 PC4          8.95688    6.86249   1.305    0.192    
 PC5         -4.04094    6.34813  -0.637    0.524    
+
+# WITH AGE
+thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5 + AGE"))
+model1 <- glm(thisFormula1, data = PD_only, ,family=binomial)
+print(summary(model1))
+
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   9.86460    1.11601   8.839  < 2e-16 ***
+SCOREZ        0.54290    0.11897   4.563 5.04e-06 ***
+sex          -1.34096    0.28135  -4.766 1.88e-06 ***
+PC1          -0.01470    4.24542  -0.003    0.997    
+PC2          -3.22680    8.15324  -0.396    0.692    
+PC3          -7.04231    6.14172  -1.147    0.252    
+PC4           7.73286    5.67885   1.362    0.173    
+PC5         -10.26529    8.10112  -1.267    0.205    
+AGE          -0.11150    0.01435  -7.771 7.80e-15 ***
+
 
 ####
 #EUR_Yes_analysis_GD1_PCA_COV_with_CORIELL.txt
@@ -663,12 +698,13 @@ dev.off()
 
 GD_only <- subset(MM_EUR, COHORT == "NHGRI" | COHORT == "NY" | COHORT == "UCL")
 table(GD_only$PD_PHENO)
-# 10 cases and 65 controls
+# 8 cases and 65 controls
 
 PD_only <- subset(MM_EUR, COHORT == "CORIELL")
 table(PD_only$PD_PHENO)
 # 2050 cases and 933 controls
 
+# NO AGE
 thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5"))
 model1 <- glm(thisFormula1, data = GD_only, ,family=binomial)
 print(summary(model1))
@@ -683,6 +719,23 @@ PC3          -3.1165     4.2205  -0.738   0.4603
 PC4          -7.0512     3.8512  -1.831   0.0671 .
 PC5           3.1989     5.3502   0.598   0.5499  
 
+# WITH AGE
+thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5 + AGE"))
+model1 <- glm(thisFormula1, data = GD_only, ,family=binomial)
+print(summary(model1))
+
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept) -2.997239   2.383835  -1.257   0.2086  
+SCOREZ       0.952018   0.560632   1.698   0.0895 .
+sex          0.209423   1.006443   0.208   0.8352  
+PC1         -1.292685   6.646555  -0.194   0.8458  
+PC2          7.245435   5.230261   1.385   0.1660  
+PC3         -3.329378   4.321230  -0.770   0.4410  
+PC4         -7.322375   4.019884  -1.822   0.0685 .
+PC5          3.523594   5.561762   0.634   0.5264  
+AGE         -0.006377   0.025672  -0.248   0.8038  
+
+# NO AGE
 thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5"))
 model1 <- glm(thisFormula1,data = PD_only, ,family=binomial)
 print(summary(model1))
@@ -699,6 +752,26 @@ PC5          0.55881    2.33084   0.240    0.811
 
 coef(summary(model1))[,4]
 # real P-value => 3.154674e-35
+
+# WITH AGE
+thisFormula1 <- formula(paste("PD_PHENO ~ SCOREZ + sex + PC1 + PC2 + PC3 + PC4 + PC5 + AGE"))
+model1 <- glm(thisFormula1,data = PD_only, ,family=binomial)
+print(summary(model1))
+
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  8.192232   0.354405  23.115  < 2e-16 ***
+SCOREZ       0.439785   0.047736   9.213  < 2e-16 ***
+sex         -0.888227   0.095186  -9.331  < 2e-16 ***
+PC1          7.691461   2.678266   2.872 0.004081 ** 
+PC2         -9.603514   2.567720  -3.740 0.000184 ***
+PC3         -4.470774   3.449473  -1.296 0.194950    
+PC4          1.974919   3.294412   0.599 0.548856    
+PC5         -4.617924   2.898108  -1.593 0.111064    
+AGE         -0.102437   0.004765 -21.498  < 2e-16 ***
+
+coef(summary(model1))[,4]
+# real P-value => 3.174363e-20
+
 
 #### next up is forest plot
 
@@ -721,20 +794,32 @@ GD (per ancestry separate, GRS normalized using Coriell data)
 AJ         0.4104     0.2289   1.793   0.0730  
 EUR        0.9450     0.5570   1.696   0.0898
 
-# input GD-PD
+# input GD-PD NO AGE
 Ancestry	Beta	SE	Z	P	
 AJ	0.4104	0.2289	1.793	0.073	
 EUR	0.9450	0.5570	1.696	0.0898	
+
+# input GD-PD WITH AGE
+Ancestry	Beta	SE	Z	P
+AJ	0.44583	0.23737	1.878	0.0603
+EUR	0.952018	0.560632	1.698	0.0895
+
 
 PD (per ancestry separate, GRS normalized using Coriell data)
             Estimate Std. Error z value Pr(>|z|)    
 EUR       0.53072    0.03903  13.598 3.154674e-35
 AJ        0.56451    0.10452   5.401 6.62e-08
 
-# input PD
+# input PD NO AGE
 Ancestry	Beta	SE	Z	P
 AJ	0.56451	0.10452	5.401	6.62E-08
 EUR	0.53072	0.03903	13.598	3.15E-35
+
+# input PD WITH AGE
+Ancestry	Beta	SE	Z	P
+AJ	0.54290	0.11897	4.563	5.04E-06
+EUR	0.439785	0.047736	9.213	3.17E-20
+
 
 ### forest plotting
 
@@ -745,6 +830,8 @@ library(data.table)
 # pick one:
 data <- read.table("input_forest_GD.txt", header = T)
 data <- read.table("input_forest_PD.txt", header = T)
+data <- read.table("input_forest_GD_AGE.txt", header = T)
+data <- read.table("input_forest_PD_AGE.txt", header = T)
 
 labs <- data$Ancestry
 yi   <- data$Beta
@@ -754,7 +841,7 @@ resRe  <- rma(yi=yi, sei=sei)
 print(summary(resFe))
 print(summary(resRe))
 
-##### GD
+##### GD NO AGE
 Model Results:
 Fixed-Effects Model
 estimate      se    zval    pval   ci.lb   ci.ub    
@@ -764,13 +851,23 @@ Random-Effects Model
 estimate      se    zval    pval   ci.lb   ci.ub   ​ 
   0.4876  0.2117  2.3032  0.0213  0.0727  0.9026  * 
 
+##### GD WITH AGE
+Model Results:
+Fixed-Effects Model
+estimate      se    zval    pval   ci.lb   ci.ub    
+  0.5228  0.2186  2.3916  0.0168  0.0944  0.9512  * 
+
+Random-Effects Model
+estimate      se    zval    pval   ci.lb   ci.ub   ​ 
+  0.5228  0.2186  2.3916  0.0168  0.0944  0.9512  * 
+
 # random and fixed is the same, which is great :)
 
-pdf(file = "GD_only_forest_FINALv2.pdf", width = 8, height = 6)
+pdf(file = "GD_only_forest_FINALv2_AGE.pdf", width = 8, height = 6)
 forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.6931472), main="Meta-analysis of PD GRS",atransf=exp, xlab=paste("Odds Ratio (95%CI)",sep=""), slab=labs, mlab="Fixed Effects", col = "red", border = "red", cex=.9)
 dev.off()
 
-pdf(file = "GD_only_forest_FINAL_arrowv2.pdf", width = 8, height = 6)
+pdf(file = "GD_only_forest_FINAL_arrowv2_AGE.pdf", width = 8, height = 6)
 forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.9931472), main="Meta-analysis of PD GRS", at=log(c(0.5,0.75, 1, 2, 14)), atransf=exp, xlab=paste("Odds Ratio (95%CI)",sep=""), slab=labs, mlab="Random Effects", col = "red", border = "red", cex=.9)
 dev.off()
 
@@ -779,22 +876,22 @@ dev.off()
 Model Results:
 Fixed-Effects Model
 estimate      se     zval    pval   ci.lb   ci.ub
-  0.5349  0.0366  14.6280  <.0001  0.4632  0.6065  *** 
+ 0.4541  0.0443  10.2496  <.0001  0.3673  0.5409  *** 
 
 Random-Effects Model
 estimate      se     zval    pval   ci.lb   ci.ub 
-  0.5349  0.0366  14.6280  <.0001  0.4632  0.6065  *** 
+  0.4541  0.0443  10.2496  <.0001  0.3673  0.5409  *** 
 
 # random and fixed is the same, which is great :)
 
 resRe$pval
-1.862632e-48
+1.188681e-24
 
-pdf(file = "PD_only_forest_FINAL_order_OK_v2.pdf", width = 8, height = 6)
+pdf(file = "PD_only_forest_FINAL_order_OK_v2_AGE.pdf", width = 8, height = 6)
 forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.6931472), main="Meta-analysis of PD GRS",atransf=exp, xlab=paste("Odds Ratio (95%CI)",sep=""), slab=labs, mlab="Fixed Effects", col = "red", border = "red", cex=.9)
 dev.off()
 
-pdf(file = "PD_only_forest_FINAL_arrow_order_OK_v2.pdf", width = 8, height = 6)
+pdf(file = "PD_only_forest_FINAL_arrow_order_OK_v2_AGE.pdf", width = 8, height = 6)
 forest(resRe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.9931472), main="Meta-analysis of PD GRS", at=log(c(0.5,0.75, 1, 2, 12)), atransf=exp, xlab=paste("Odds Ratio (95%CI)",sep=""), slab=labs, mlab="Random Effects", col = "red", border = "red", cex=.9)
 dev.off()
 
